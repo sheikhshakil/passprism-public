@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PassPrism!</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <section class="">
+      <div class="px-2">
+        <div class="main">
+          <div class="form">
+            <div class="icon text-center">
+              <i class="fas formIcon fa-user-plus"></i>
+            </div>
+            <div class="text-center">
+              <h5>Register in <a href="/">PassPrism</a></h5>
+            </div>
+
+            <form action="/register" method="post">
+              <div class="inputField">
+                <input
+                  name="fullName"
+                  class="<%= errors.fullName ? 'is-invalid' : '' %>"
+                  required
+                  value="<%= values.fullName ? values.fullName : '' %>"
+                  placeholder="Full name"
+                  type="text"
+                />
+                <!-- invalid reason -->
+                <div class="invalid-feedback"><%= errors.fullName %></div>
+              </div>
+
+              <div class="inputField">
+                <input
+                  name="email"
+                  class="<%= errors.email ? 'is-invalid' : '' %>"
+                  required
+                  value="<%= values.email ? values.email : '' %>"
+                  placeholder="Email"
+                  type="email"
+                />
+                <!-- invalid reason -->
+                <div class="invalid-feedback"><%= errors.email %></div>
+              </div>
+
+              <div class="inputField">
+                <input
+                  name="password"
+                  class="<%= errors.password ? 'is-invalid' : '' %>"
+                  required
+                  value="<%= values.password ? values.password : '' %>"
+                  placeholder="Password"
+                  type="password"
+                />
+                <!-- invalid reason -->
+                <div class="invalid-feedback"><%= errors.password %></div>
+              </div>
+              <p class="new-reg">Make sure you've read our <a href="/privacy-policy">Privacy policy</a></p>
+
+              <div class="text-center">
+                <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
+              </div>
+
+              <div class="new-reg">
+                <p>Already have an account? <a href="/login">Login here</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <img class="bg" src="svg/reg-wave.svg" alt="" />
+    </section>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <section class="updateDetails container py-3">
+      <div class="">
+        <a type="button" href="/panel" class="btn btn-sm mb-5 btn-warning"
+          ><i class="fas fa-backspace"></i> Cancel process</a
+        >
+      </div>
+
+      <% if (update == 'email') { %>
+      <div class="text-center"><h3>Update Email address</h3></div>
+      <!-- style this div -->
+      <div class="u-form">
+        <!-- error -->
+        <% if (error) { %>
+        <div class="alert alert-danger mb-2" role="alert">
+          <b>Wrong Password!</b>
+          <br />
+          <%= error %>
+        </div>
+        <% } %>
+        <form action="/updateEmail" method="post">
+          <div class="mb-2 row">
+            <label for="" class="col-sm-2 col-form-label">New Email</label>
+            <div class="col-sm-10">
+              <input
+                type="email"
+                class="form-control <%= errors.newEmail ? 'is-invalid' : '' %>"
+                placeholder="Enter new email"
+                name="newEmail"
+                value="<%= values.newEmail ? values.newEmail : ''%>"
+              />
+              <!-- invalid reason -->
+              <div class="invalid-feedback"><%= errors.newEmail %></div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter account password"
+                class="form-control <%= errors.password ? 'is-invalid' : '' %>"
+              />
+              <div class="invalid-feedback"><%= errors.password %></div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-danger" type="submit">
+              <i class="fas fa-check-circle"></i> Update
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <% } %> <% if (update == 'pass') { %>
+      <div class="text-center"><h3>Change account password</h3></div>
+      <!-- style this div -->
+      <div class="u-form">
+        <!-- error -->
+        <% if (error) { %>
+        <div class="alert alert-danger mb-2" role="alert">
+          <b>Error!</b>
+          <br />
+          <%= error %>
+        </div>
+        <% } %>
+        
+        <form action="/changeAccPass" method="post">
+          <div class="mb-2 row">
+            <label for="" class="col-sm-3 col-form-label">Old password</label>
+            <div class="col-sm-9">
+              <input
+                type="password"
+                class="form-control"
+                required
+                name="oldPass"
+                placeholder="Enter old password"
+              />
+              <div class="mt-1"><a id="forgot2" href="/forgotPass">Forgot password?</a></div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="" class="col-sm-3 col-form-label">New password</label>
+            <div class="col-sm-9">
+              <input
+                type="password"
+                required
+                name="newPass"
+                placeholder="Enter new account password"
+                class="form-control <%= errors.newPass ? 'is-invalid' : '' %>"
+                value="<%= values.newPass ? values.newPass : '' %>"
+              />
+              <div class="invalid-feedback"><%= errors.newPass %></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-danger" type="submit">
+              <i class="fas fa-check-circle"></i> Change
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <% } %> <% if (update == 'vaultPass') { %>
+      <div class="text-center">
+        <h3>Reset vault password</h3>
+      </div>
+      <!-- style this div -->
+      <div class="u-form">
+        <% if (error) { %>
+        <div class="alert alert-danger mb-2" role="alert">
+          <b>Error!</b>
+          <br />
+          <%= error %>
+        </div>
+        <% } %>
+
+        <form action="/resetVaultPass" method="post">
+          <div class="mb-2 row">
+            <label for="" class="col-sm-3 col-form-label"
+              >Verification code</label
+            >
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                required
+                name="verCode"
+                value="<%= values.verCode ? values.verCode : '' %>"
+                placeholder="Check your email for a 6 digit code"
+              />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="" class="col-sm-3 col-form-label"
+              >New vault password</label
+            >
+            <div class="col-sm-9">
+              <input
+                type="password"
+                required
+                name="vaultPass"
+                placeholder="Enter new vault password"
+                value="<%= values.vaultPass ? values.vaultPass : '' %>"
+                class="form-control <%= errors.vaultPass ? 'is-invalid' : '' %>"
+              />
+              <!-- invalid reason -->
+              <div class="invalid-feedback"><%= errors.vaultPass %></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-danger" type="submit">
+              <i class="fas fa-check-circle"></i> Reset
+            </button>
+          </div>
+        </form>
+      </div>
+      <% } %>
+
+      
+    </section>
+    <img class="bg" src="svg/otherWave.svg" alt="" />
+  </body>
+</html>

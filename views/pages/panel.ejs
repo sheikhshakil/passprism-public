@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Panel</title>
+  </head>
+
+  <body onload="handleDiv()">
+    <section class="">
+      <div class="panel pt-3">
+        <div class="container">
+          <!-- generate -->
+          <div class="handle <%= showCreate ? 'show' : '' %>" id="create">
+            <% if (vaultSuccess) { %>
+            <div class="alert" role="alert">
+              <b>Done!</b>
+              <p>Successfully saved your data.</p>
+            </div>
+            <% } %>
+            <div class="text-center">
+              <h4>Generate strong passwords here</h4>
+              <h6>
+                Only use English in all fields to avoid Encryption errors.
+              </h6>
+            </div>
+            <hr />
+            <div class="gen">
+              <!-- inputs -->
+              <div class="">
+                <b>Choose generate method:</b>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="choice"
+                    type="radio"
+                    value="charsOnly"
+                    id="charsOnly"
+                  />
+                  <label class="form-check-label" for="charsOnly">
+                    Basic characters only
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="choice"
+                    type="radio"
+                    value="charsWithSymbols"
+                    id="charsWithSymbols"
+                  />
+                  <label class="form-check-label" for="charsWithSymbols">
+                    Characters with symbols (Stronger)
+                  </label>
+                </div>
+                <div>
+                  <span id="checkboxError"></span>
+                </div>
+              </div>
+
+              <div class="my-2">
+                <b>Enter desired password length: </b>
+                <div>
+                  <input
+                    type="text"
+                    name="length"
+                    required
+                    placeholder="Length (i.e. 10)"
+                    id="length"
+                  />
+                </div>
+                <div>
+                  <span id="lengthError"></span>
+                </div>
+              </div>
+
+              <div class="">
+                <button
+                  onclick="generateRandomString()"
+                  id="genBtn"
+                  class="actionBtn btn btn-danger"
+                >
+                  <i class="fas fa-check-circle"></i> Generate
+                </button>
+                <button
+                  id="clearBtn"
+                  onclick="clearFields()"
+                  class="actionBtn btn btn-primary"
+                >
+                  <i class="fas fa-backspace"></i> Clear fields
+                </button>
+              </div>
+
+              <hr />
+
+              <!-- generated output part -->
+              <div class="output">
+                <h5>Generated output:</h5>
+                <form action="/savePass" method="post">
+                  <div>
+                    <input
+                      type="text"
+                      required
+                      class="<%= errors.genPassword ? 'is-invalid' : '' %>"
+                      value="<%= values.genPassword ? values.genPassword : '' %>"
+                      placeholder="Desired password"
+                      name="genPassword"
+                      id="genPassword"
+                    />
+
+                    <a
+                      id="copyBtn"
+                      onclick="copyPass()"
+                      class="actionBtn btn btn-primary"
+                    >
+                      <i class="fas fa-copy"></i> Copy password
+                    </a>
+                    <span id="copied"></span>
+
+                    <!-- invalid reason -->
+                    <div class="invalid-feedback">
+                      <%= errors.genPassword %>
+                    </div>
+                  </div>
+                  <div>
+                    <span id="hint"
+                      ><i class="hint fas fa-lightbulb"></i> You can also type a
+                      password manually to save!</span
+                    >
+                  </div>
+
+                  <div class="notes mt-2">
+                    <textarea
+                      name="note"
+                      required
+                      class="<%= errors.note ? 'is-invalid' : '' %>"
+                      value="<%= values.note ? values.note : '' %>"
+                      placeholder="Notes for this password. (i.e. My instagram password.)"
+                      id="note"
+                    ></textarea>
+
+                    <div class="invalid-feedback"><%= errors.note %></div>
+                  </div>
+
+                  <div>
+                    <button class="actionBtn btn btn-success" type="submit">
+                      <i class="fas fa-cloud-upload-alt"></i> Save in Vault
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- vault part -->
+          <div class="handle <%= showVault ? 'show' : '' %>" id="db">
+            <% if (deleteSuccess) { %>
+            <div class="alert" role="alert">
+              <b>Deleted!</b>
+              <p>Successfully deleted your data.</p>
+            </div>
+            <% } %>
+
+            <div class="show-data">
+              <!-- if user doesn't have vault pass or data shown once -->
+              <% if (!user.vaultPass || shownData) { %>
+              <button class="vault-btn btn btn-danger px-3 btn-sm" disabled>
+                <i class="fas fa-eye"></i> Show data
+              </button>
+
+              <% } else { %>
+              <!-- if user has vault pass -->
+              <button
+                data-bs-toggle="collapse"
+                data-bs-target="#showVaultAuth"
+                class="vault-btn btn btn-danger px-3 btn-sm"
+              >
+                <i class="fas fa-eye"></i> Show data
+              </button>
+              <% } %>
+            </div>
+
+            <div class="text-center mt-2">
+              <h4>Passwords Vault</h4>
+            </div>
+
+            <hr />
+
+            <!-- if user doesn't have vault pass -->
+            <% if (!user.vaultPass) { %>
+            <div>
+              <span class="text-danger"
+                >Seems you've not set a vault password yet.</span
+              >
+              <h5>Set a vault password first for your security:</h5>
+            </div>
+            <div>
+              <form action="/setVaultPass" method="post">
+                <div class="input-group mb-3">
+                  <input
+                    type="password"
+                    name="vaultPass"
+                    value=""
+                    class="form-control <%= errors.vaultPass ? 'is-invalid' : ''%>"
+                    placeholder="Vault password"
+                  />
+                  <!-- invalid reason -->
+                  <div class="invalid-feedback"><%= errors.vaultPass %></div>
+
+                  <button class="btn btn-danger input-group-text">
+                    <i class="fas fa-check-circle"></i> Set
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- if user has vault pass -->
+            <% } else { %>
+            <div id="showVaultAuth" class="collapse">
+              <form action="/showVaultData" method="post">
+                <div id="vaultPass" class="input-group mb-3">
+                  <input
+                    type="password"
+                    name="vaultPass"
+                    class="form-control"
+                    placeholder="Enter vault password"
+                  />
+
+                  <button class="btn btn-danger input-group-text">
+                    <i class="fas fa-check-circle"></i> Confirm
+                  </button>
+                </div>
+              </form>
+            </div>
+            <% } %>
+
+            <!-- if vault pass is wrong -->
+            <% if (error) { %>
+            <p class="text-danger text-center">
+              <i class="fas fa-times-circle"></i> <%= error %>
+            </p>
+            <% } %> <% if (shownData) { %> <% if (userData.length > 0) { %>
+            <div class="table-responsive">
+              <p>
+                Here are all the passwords and their related notes you saved
+                till now.
+              </p>
+              <table border="1" class="table table-light table-striped">
+                <thead class="table-danger">
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Note</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Saved On</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% userData.forEach((data, i)=> { %>
+                  <tr>
+                    <th scope="row"><%= i+1 %></th>
+                    <td><%= data.relatedNote %></td>
+                    <td>
+                      <!-- copy password -->
+                      <input
+                        class="hiddenPass"
+                        id="<%= 'savedPass'+i %>"
+                        value="<%= data.savedPass %>"
+                        type="text"
+                      />
+                      <button class="btn btn-sm btn-primary mb-1 vaultCopyBtn">
+                        Copy
+                      </button>
+
+                      <form
+                        id="deletePassForm"
+                        action="/deletePass"
+                        method="post"
+                      >
+                        <div class="d-none">
+                          <input
+                            type="text"
+                            name="deleteIndex"
+                            value="<%= i %>"
+                            id=""
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          class="deleteBtn btn btn-sm btn-danger mb-1"
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    </td>
+                    <td><%= data.savedPass %></td>
+                    <td>
+                      <%= new Date(data.savedOn._seconds*1000).toLocaleString()
+                      %>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+
+            <% } else { %>
+            <p class="text-center">No saved passwords in your vault so far.</p>
+            <% } %> <% } else { %>
+            <p class="text-center">
+              <i class="text-danger fas fa-exclamation-triangle"></i> Vault data
+              is hidden for your security.
+            </p>
+            <% } %>
+          </div>
+
+          <!-- profile part -->
+          <div class="handle <%= showProfile ? 'show' : '' %>" id="profile">
+            <% if (updateSuccess) { %>
+            <div class="alert" role="alert">
+              <b>Done!</b>
+              <p><%= updateSuccess %></p>
+            </div>
+            <% } %>
+            <div class="logout">
+              <a
+                id="logoutBtn"
+                class="btn btn-danger px-3 btn-sm"
+                href="/logout"
+                ><i class="fas fa-sign-out-alt"></i> Logout</a
+              >
+            </div>
+            <div class="profile-head mt-2 text-center">
+              <h4>My Profile</h4>
+            </div>
+            <hr />
+            <div class="text-center mb-3">
+              <i class="user fas fa-user-circle"></i>
+            </div>
+            <div class="info">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id=""><b>User ID</b></span>
+                <input
+                  type="text"
+                  disabled
+                  class="form-control"
+                  value="<%= user.uid %>"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id=""><b>Name</b></span>
+                <input
+                  type="text"
+                  disabled
+                  class="form-control"
+                  value="<%= user.fullName %>"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text"><b>Email</b></span>
+                <input
+                  type="email"
+                  disabled
+                  value="<%= user.email %>"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text"><b>Joined on</b></span>
+                <textarea
+                  class="form-control"
+                  disabled
+                  placeholder="<%= new Date(user.joinedOn._seconds*1000) %>"
+                ></textarea>
+              </div>
+
+              <!-- update details -->
+              <div class="mt-4">
+                <h5>Other actions</h5>
+                <hr />
+
+                <div>
+                  <a class="mb-3 btn btn-dark" href="/updateDetails?email=true">
+                    <i class="fas fa-edit"></i> Update email
+                  </a>
+                </div>
+
+                <div>
+                  <a
+                    class="mb-3 btn btn-danger"
+                    href="/updateDetails?pass=true"
+                  >
+                    <i class="fas fa-key"></i> Change account password
+                  </a>
+                </div>
+
+                <div>
+                  <button
+                    class="mb-3 btn btn-primary"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#confirmUpdate"
+                  >
+                    <i class="fab fa-keycdn"></i> Reset vault password
+                  </button>
+                  <div id="confirmUpdate" class="collapse">
+                    <div>
+                      <p>
+                        An email with a 6 digit verification code will be sent
+                        to your email address. Use that to reset vault password.
+                      </p>
+                      <a
+                        href="/updateDetails?vaultPass=true"
+                        class="btn btn-danger btn-sm"
+                        ><i class="fas fa-arrow-circle-right"></i> Proceed</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- bottom navigation buttons -->
+        <div class="bottom-nav">
+          <div class="nav-option selectedOption">
+            <div>
+              <i class="fas fa-plus-circle"></i>
+              <span>Generate</span>
+            </div>
+          </div>
+          <div class="nav-option">
+            <div>
+              <i class="fab fa-keycdn"></i>
+              <span>Vault</span>
+            </div>
+          </div>
+          <div class="nav-option">
+            <div>
+              <i class="fas fa-user"></i>
+              <span>Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- for disabling vault delete btn -->
+    <script>
+      $(document).ready(function () {
+        $("#deletePassForm").submit(function () {
+          $(".deleteBtn").attr("disabled", true);
+          return true;
+        });
+      });
+    </script>
+
+    <!-- for showing noti -->
+    <script>
+      $().ready(function () {
+        $("div.alert").delay(3000);
+        $("div.alert").hide(1000);
+      });
+    </script>
+
+    <script src="js/panel.js"></script>
+    <script src="js/passwordGenerator.js"></script>
+    <script src="js/genOtherActions.js"></script>
+    <script src="js/vaultActions.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reset account password</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="exceptionals">
+    <div class="container forgot">
+      <div class="my-3">
+        <a class="btn btn-danger btn-sm" href="/panel"><i class="fas fa-times-circle"></i> Abort</a>
+      </div>
+      <h2 class="text-center text-white mt-3">Account password reset</h2>
+
+      <div class="f-form">
+        <% if (user) { %> <% if (!ongoing) { %>
+        <div class="mb-3">
+          <div>Your email: <i id="mail"><%= user.email %></i></div>
+
+          <div class="mt-2">
+            A mail with a verification code will be sent to your above email
+            address. Use that to reset account password. So ready?
+          </div>
+        </div>
+        <button id="ready" class="btn btn-success btn-sm">
+          <i class="fas fa-check-circle"></i> Yes, send the code
+        </button>
+        <% } %> <% } else { %> <% if (!ongoing) { %>
+        <!-- if user isn't logged in -->
+        <div class="mb-3 text-white f-inputs">
+          <p>
+            A verification code will be sent to your email if it's registered.
+            Use that code to reset account password.
+          </p>
+          <form action="/forgotPassSendCode" method="post">
+            <div>
+              <input
+                type="text"
+                type="email"
+                placeholder="Enter your email"
+                required
+                name="email"
+                class="<%= errors.email ? 'is-invalid' : '' %>"
+                value="<%= values.email ? values.email : '' %>"
+              />
+              <div class="invalid-feedback"><%= errors.email %></div>
+            </div>
+
+            <div class="text-center">
+              <button class="resetAccPass" type="submit">Send code</button>
+            </div>
+          </form>
+        </div>
+        <% } %> <% } %>
+
+        <!-- code input form -->
+        <div class="f-inputs" id="<%= ongoing ? '' : 'f-inputs' %>">
+          <% if (error) { %>
+          <div role="alert" class="alert text-danger alert-danger">
+            Error!
+            <p><%= error %></p>
+          </div>
+          <% } %>
+          <h4 class="text-center text-warning">
+            <i class="fas fa-check"></i> Code Sent
+          </h4>
+          <form action="/resetAccPassAuth" method="post">
+            <input
+              type="text"
+              placeholder="Enter verification code"
+              required
+              name="verCode"
+              value="<%= values.verCode ? values.verCode : '' %>"
+            />
+            <input
+              type="password"
+              placeholder="Enter new password"
+              required
+              name="newPass"
+              class="<%= errors.newPass ? 'is-invalid' : ''%>"
+            />
+            <div class="invalid-feedback text-center">
+              <%= errors.newPass %>
+            </div>
+            <div class="text-center">
+              <button class="resetAccPass" type="submit">
+                <i class="fas fa-check-circle"></i> Reset password
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <img class="bg" src="svg/otherWave.svg" alt="" />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $("#ready").click(function () {
+        document.getElementById("ready").innerHTML = "Sending...";
+        $.ajax({
+          url: "/forgotPassSendCode",
+          type: "GET",
+          success: function (msg) {
+            document.getElementById("ready").innerHTML = "Done";
+            document.getElementById("f-inputs").style.display = "block";
+            document.getElementById("ready").disabled = "true";
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,498 @@
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+:root {
+  --colorPrimary: #00cba9;
+  --colorDark: #263238;
+  --colorHover: #038872;
+  --colorText: rgb(219, 219, 219);
+  --green: #14aa00;
+  --navSelect: #00cb76;
+}
+
+body {
+  background: linear-gradient(to right, #00cba9, #00cb76);
+  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* main css */
+.home {
+  max-width: 60vw;
+  position: relative;
+  z-index: 10;
+  margin: 0 auto;
+  background-color: var(--colorDark);
+  color: var(--colorText);
+  border-radius: 20px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.home h3 {
+  color: var(--colorPrimary);
+}
+
+.home-btn {
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+}
+
+.home-btn:last-child {
+  background-color: var(--colorPrimary);
+}
+.home-btn:last-child:hover {
+  background-color: var(--colorHover);
+}
+
+.copyr8{
+  color: var(--colorPrimary);
+}
+
+.app {
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  background-color: #2e4450;
+}
+
+.logo {
+  max-width: 80px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  
+}
+
+h5 a{
+  color: var(--colorPrimary);
+  text-decoration: none;
+}
+
+h5 a:hover{
+  color: var(--colorHover);
+}
+
+/* main form */
+.form {
+  position: relative;
+  z-index: 100;
+  min-width: 50%;
+  background-color: var(--colorDark);
+  padding: 2rem;
+  border-radius: 30px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+/* input styles */
+.inputField{
+  margin-bottom: 1rem;
+}
+.invalid-feedback{
+  color: rgb(255, 104, 104);
+}
+
+.form input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--colorPrimary);
+  border-radius: 20px;
+  background-color: var(--colorDark);
+  color: var(--colorText);
+}
+
+.form input:focus,
+.form button:focus, .resetAccPass:focus {
+  outline: none;
+}
+
+.form button, .resetAccPass {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--colorPrimary);
+  background-color: var(--colorDark);
+  color: var(--colorText);
+  border-radius: 20px;
+}
+.form button:hover, .resetAccPass:hover {
+  background-color: var(--colorPrimary);
+  color: var(--colorDark);
+}
+
+/* icon of form */
+.formIcon {
+  font-size: 1.9rem;
+  color: var(--colorPrimary);
+}
+
+/* form top icon */
+.icon {
+  border: 4px solid var(--colorPrimary);
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.form h5 {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: var(--colorPrimary);
+}
+
+.form ::placeholder {
+  color: var(--colorText);
+}
+
+/* extra */
+.extra {
+  position: relative;
+  z-index: 100;
+  background-color: var(--colorDark);
+  padding: 1.8rem 1.2rem 1rem 1.2rem;
+  border-radius: 25px;
+  color: var(--colorText);
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.extra a {
+  text-decoration: none;
+  color: var(--colorPrimary);
+}
+.extra a:hover {
+  color: var(--colorHover);
+}
+
+.extra:hover {
+  border-radius: 30px;
+}
+
+.extra ul li {
+  line-height: 1.6;
+}
+
+/* wave */
+.bg {
+  position: fixed;
+  bottom: 0;
+}
+
+/* login page */
+.new-reg {
+  margin-top: 1.5rem;
+  color: var(--colorText);
+}
+.new-reg p {
+  margin-bottom: 0;
+}
+.new-reg a,
+#forgot {
+  color: var(--colorPrimary);
+  text-decoration: none;
+}
+.new-reg a:hover,
+#forgot:hover {
+  color: var(--colorHover);
+}
+
+/* ------------------------------------Panel---------------------------------- */
+.panel{
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.bottom-nav{
+  position: fixed;
+  z-index: 100;
+  overflow: hidden;
+  bottom: 0;
+  height: 70px;
+  background-color: var(--colorDark);
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+.nav-option{
+  color: var(--colorText);
+  width: 33.33%;
+  height: 70px;
+  text-align: center;
+  padding-top: 0.2rem;
+}
+
+#create, #db, #profile{
+  display: none;
+}
+
+.nav-option:hover{
+  background-color: #2b3b41;
+  cursor: pointer;
+  
+}
+
+.selectedOption{
+  color: var(--navSelect);
+}
+
+.nav-option i{
+  font-size: 1.5rem;
+}
+
+.nav-option span {
+  display: block;
+}
+
+.nav-option div{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* panel body */
+.panel{
+  padding-bottom: 5rem;
+}
+
+/* white transparent divs */
+.handle {
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.7) ) ;
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
+  padding: 1.2rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.handle h4, h5 {
+  color: var(--colorHover);
+}
+
+.handle h6 {
+  color: rgb(216, 56, 56);
+}
+
+.handle .alert {
+  background: linear-gradient(to right, #f7fff5, #b4ffba);
+  border: 2px solid var(--colorPrimary);
+  border-radius: 10px;
+}
+
+/* generator */
+/* input fields */
+#length, #genPassword {
+  min-width: 60%;
+  padding: 0.4rem 0.8rem;
+  border: 2px solid var(--colorHover);
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.2rem;
+}
+
+/* generated pass input */
+#genPassword{
+  min-width: 70%;
+}
+
+/* all buttons */
+.actionBtn{
+  border-radius: 20px;
+  margin: 0.2rem 0; 
+  padding: 0.4rem 0.8rem;
+}
+
+#length:focus, #genPassword:focus{
+  outline: none;
+}
+
+/* textarea*/
+#note{
+  min-width: 70% !important;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  resize: none;
+  border: 2px solid var(--colorHover);
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.767);
+}
+
+#note:focus{
+  outline: none;
+}
+
+/* input validation */
+#checkboxError, #lengthError {
+  color: rgb(218, 0, 0);
+}
+
+/* hint icon */
+.hint {
+  color: rgb(255, 102, 0);
+}
+
+/* hint text */
+#hint {
+  color: var(--colorHover);
+}
+
+/* copy notification */
+#copied {
+  color: #0d6efd;
+}
+
+/* vault */
+.show-data{
+  text-align: right;
+}
+.hiddenPass {
+  position: absolute;
+  opacity: 0;
+  z-index: -100;
+}
+
+/* panel - profile */
+.logout {
+  text-align: right;
+}
+#logoutBtn, .vault-btn {
+  border-radius: 20px;
+}
+.user {
+  font-size: 4rem;
+  color: var(--green);
+}
+
+#confirmUpdate div{
+  border: 2px solid rgb(204, 0, 0);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+/* update details page */
+.u-form {
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+  max-width: 70%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+}
+
+#forgot2 {
+  color: #118f00;
+  text-decoration: none;
+}
+#forgot2:hover {
+  color: #0d7000;
+}
+
+/* forgot pass page */
+.exceptionals{
+  background: linear-gradient(to right, #3dcca1, #1d8b39);
+}
+
+.f-form{
+  max-width: 60%;
+  background-color: var(--colorDark);
+  position: relative;
+  z-index: 100;
+  margin: 1.5rem auto;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.f-form div:first-child{
+  color: var(--colorText);
+}
+
+#mail{
+  color: var(--colorPrimary);
+}
+
+#f-inputs {
+  margin-top: 2rem;
+  display: none;
+}
+
+.f-inputs input {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: 2px solid var(--colorPrimary);
+  border-radius: 20px;
+  background-color: var(--colorDark);
+  color: var(--colorText);
+}
+
+.f-inputs input:focus{
+  outline: none;
+}
+.f-inputs input::placeholder {
+  color: var(--colorText);
+}
+
+/* ------------------------------------Panel end---------------------------------- */
+
+/* privacy policy page */
+.privacy {
+  background: linear-gradient(to right, #dbfff0, #00cb78);
+}
+.privacy a{
+  color: #0d7000;
+  text-decoration: none;
+}
+.privacy a:hover{
+  color: #2b881f;
+}
+
+@media (max-width: 1100px) {
+  .home {
+    max-width: 90vw;
+  }
+  .form {
+    min-width: 90%;
+    margin-bottom: 1rem;
+  }
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+  .handle {
+    width: 100%;
+    padding: 1rem 0.8rem;
+  }
+  #length {
+    width: 80%;
+  }
+  #genPassword, #note {
+    width: 100%;
+  }
+  #copyBtn {
+    margin-top: 0.4rem;
+  }
+  .u-form{
+    min-width: 100%;
+  }
+  .f-form{
+    min-width: 100%;
+  }
+}

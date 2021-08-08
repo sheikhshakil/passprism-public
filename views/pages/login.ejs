@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PassPrism!</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <section class="">
+      <div class="px-2">
+        <!-- if password is wrong -->
+        <% if (error) { %>
+        <div class="px-4 pt-3">
+          <div class="m-auto col-md-6 alert alert-danger" role="alert">
+            <strong><%= error %></strong>
+            <br />
+            Make sure you've entered correct Email or Password.
+          </div>
+        </div>
+        <% } %>
+
+        <% if (resetSuccess) { %>
+          <div class="px-4 pt-3">
+            <div class="m-auto col-md-6 alert alert-primary" role="alert">
+              <b>Reset of account password is successful.</b>
+              <br>
+              Please login with your new password.
+            </div>
+          </div>
+        <% } %>
+
+        <!-- main form starts -->
+        <div class="main">
+          <div class="form">
+            <div class="icon text-center">
+              <i class="formIcon fas fa-user-shield"></i>
+            </div>
+            <div class="text-center">
+              <h5>Login to <a href="/">PassPrism</a></h5>
+            </div>
+
+            <form action="/login" method="post">
+              <div class="inputField">
+                <input
+                  class="<%= errors.email ? 'is-invalid' : ''%>"
+                  value="<%= values.email ? values.email : ''%>"
+                  name="email"
+                  required
+                  placeholder="Email"
+                  type="email"
+                />
+                <!-- invalid reason -->
+                <div class="invalid-feedback"><%= errors.email %></div>
+              </div>
+
+              <div class="inputField">
+                <input
+                  class="<%= errors.password ? 'is-invalid' : ''%>"
+                  value="<%= values.password ? values.password : ''%>"
+                  name="password"
+                  required
+                  placeholder="Password"
+                  type="password"
+                />
+                <!-- invalid reason -->
+                <div class="invalid-feedback"><%= errors.password %></div>
+              </div>
+
+              <a id="forgot" href="/forgotPass">Forgot password?</a>
+              <p class="new-reg">Make sure you've read our <a href="/privacy-policy">Privacy policy</a></p>
+              <div class="text-center">
+                <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+              </div>
+
+              <div class="new-reg">
+                <p>
+                  Don't have an account? <a href="/register">Create one here</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        
+      </div>
+      <img class="bg" src="svg/login-wave.svg" alt="" />
+    </section>
+  </body>
+</html>

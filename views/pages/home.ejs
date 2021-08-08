@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PassPrism!</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <section class="p-4">
+      <div class="home px-4 px-md-5 py-4">
+        <div class="text-center">
+          <img class="logo" src="svg/logo.svg" alt="" />
+          <h3 class="mb-3">Welcome to PassPrism</h3>
+        </div>
+        <div>
+          <p>
+            Generate strong passwords and store securely in cloud. No more remembering passwords forever.
+          </p>
+          <hr />
+          <p>
+            Your all Passwords and related Notes are always stored with
+            <b>Encryption</b> which means nobody except you can read
+            them, not even PassPrism.
+          </p>
+          <p>Learn more about our <a id="forgot" href="/privacy-policy">Privacy policy</a></p>
+        </div>
+        <hr />
+        <div class="text-center">
+          <p>Just create an account or login to get started.</p>
+          <a class="btn home-btn btn-warning mb-2" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+          <a class="btn home-btn mb-2" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </div>
+
+        <div class="text-center app d-none d-xl-block d-xxl-block">
+          <hr>
+          <span>You can also Download <b>PassPrism</b> App for better user experience: </span>
+          <div class="col-md-3 m-auto">
+            <a href='https://play.google.com/store/apps/details?id=com.devshakil.passprism.free&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' class="img-fluid" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+          </div>
+          <hr>
+        </div>
+        <hr class="d-block d-xl-none d-xxl-none">
+        <div class="text-center mt-4 copyr8">
+          <span>&#169 DevShakil - All rights reserved</span>
+        </div>
+      </div>
+    </section>
+    <img class="bg" src="svg/home-wave.svg" alt="" />
+  </body>
+
+  <script>
+    const netStatus = () => {
+      window.addEventListener("offline", () => {
+        document.write("Seems you are offline");
+      });
+    };
+    netStatus();
+  </script>
+</html>
